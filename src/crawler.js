@@ -46,6 +46,8 @@ items.forEach((item) => {
 			console.log('Arquivo salvo com sucesso!');
 		}
 	});
+
+  return JSON.stringify(response)
 };
 
 const SearchNoticies = async (callback) => {
@@ -56,7 +58,9 @@ const SearchNoticies = async (callback) => {
     });
     const objectReturn = await LeanResponse(response.data);
     // console.log("response", response.data)
-    callback(null, objectReturn);
+    // callback(null, objectReturn);
+    // console.log("objectReturn", objectReturn)
+    return objectReturn;
   } catch (err) {
     callback(err);
   }
@@ -69,3 +73,7 @@ SearchNoticies((err, response) => {
     // console.log('response', response);
   }
 });
+
+module.exports = {
+  SearchNoticies,
+};

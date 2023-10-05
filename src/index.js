@@ -2,15 +2,26 @@ const express = require('express')
 const cors = require("cors")
 const app = express()
 const port = 3336
+const mongoose = require("mongoose")
 
-// const { SearchNoticies } = require('./crawler.js');
-const resp = require('../response.json')
+const { Schema } = mongoose
+const { SearchNoticies } = require('./crawler.js');
+// const resp = require('../response.json')
+
+const schema = new Schema({
+  data: Array
+})
+
+const Job = mongoose.model("Job", schema);
 
 const corsOptions = {
   origin: ['http://localhost:3000'], // Origem permitida (seu frontend)
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
   credentials: true, // Permitir cookies e cabeçalhos de autenticação
 };
+
+const conn = require("../db/conn")
+conn()
 
 app.use(
   express.urlencoded({
@@ -26,11 +37,25 @@ app.get("/", (req, res) => {
   })
 })
 
+app.post("/jobs", async (req, res) => {
+  req.headers["Content-Type"] = "application/json";
+
+  const meu = await SearchNoticies()
+  console.log(" meu", meu)
+  const job = new Job({meu})
+
+  await job.save()
+  res.json({
+    message: "Job criado com sucesso"
+  });
+})
+
 app.get("/jobs", async (req, res) => {
-  console.log(">>>", resp)
-  
-  res.json(resp);
-});
+  // Executar a função SearchNoticies
+  // Retornar as vagas de emprego
+  const meu = await SearchNoticies()
+  res.json(meu);
+})
 
 app.listen(port, () => {
   console.log("Server on port:" + port)
