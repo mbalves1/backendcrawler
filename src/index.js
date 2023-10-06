@@ -20,7 +20,7 @@ const corsOptions = {
   credentials: true, // Permitir cookies e cabeçalhos de autenticação
 };
 
-const conn = require("../db/conn")
+const conn = require("../db/conn.js")
 conn()
 
 app.use(
@@ -40,21 +40,21 @@ app.get("/", (req, res) => {
 app.post("/jobs", async (req, res) => {
   req.headers["Content-Type"] = "application/json";
 
-  const meu = await SearchNoticies()
-  console.log(" meu", meu)
-  const job = new Job({meu})
+  const data = await SearchNoticies()
+  const job = new Job({data})
 
   await job.save()
   res.json({
-    message: "Job criado com sucesso"
+    message: "Job criado com sucesso",
+    job
   });
 })
 
 app.get("/jobs", async (req, res) => {
   // Executar a função SearchNoticies
   // Retornar as vagas de emprego
-  const meu = await SearchNoticies()
-  res.json(meu);
+  const data = await SearchNoticies()
+  res.json(data);
 })
 
 app.listen(port, () => {

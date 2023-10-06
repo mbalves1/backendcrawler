@@ -47,7 +47,7 @@ items.forEach((item) => {
 		}
 	});
 
-  return JSON.stringify(response)
+  return response
 };
 
 const SearchNoticies = async (callback) => {
@@ -56,10 +56,8 @@ const SearchNoticies = async (callback) => {
       url: 'https://github.com/frontendbr/vagas/issues',
       method: 'get',
     });
+
     const objectReturn = await LeanResponse(response.data);
-    // console.log("response", response.data)
-    // callback(null, objectReturn);
-    // console.log("objectReturn", objectReturn)
     return objectReturn;
   } catch (err) {
     callback(err);
