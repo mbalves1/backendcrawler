@@ -15,7 +15,7 @@ const schema = new Schema({
 const Job = mongoose.model("Job", schema);
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://my-app-crawler.vercel.app/'], // Origem permitida (seu frontend)
+  origin: ['http://localhost:3000', 'https://my-app-crawler.vercel.app'], // Origem permitida (seu frontend)
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
   credentials: true, // Permitir cookies e cabeçalhos de autenticação
 };
