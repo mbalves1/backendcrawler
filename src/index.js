@@ -23,11 +23,6 @@ const corsOptions = {
 const conn = require("../db/conn.js")
 conn()
 
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-)
 app.use(cors(corsOptions))
 app.use(express.json())
 
